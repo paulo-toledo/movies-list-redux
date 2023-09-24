@@ -2,11 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./views/Home";
+import "./styles.css";
+import { MovieDetails } from "./views/MovieDetails";
+import Header from "./components/Header";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { Favoritos } from "./views/Favoritos";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
+    element: <Header />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/movie/:id",
+        element: <MovieDetails />,
+      },
+      {
+        path: "/favoritos",
+        element: <Favoritos />,
+      },
+    ],
   },
 ]);
 
@@ -15,6 +34,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
